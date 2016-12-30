@@ -2,11 +2,45 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>5</version>
+    </parent>
 
+    <modelVersion>4.0.0</modelVersion>
     <groupId>tech.lunr</groupId>
     <artifactId>dumber</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
+    <url>https://github.com/lunrtech/dumber</url>
+
+    <scm>
+        <connection>scm:git:git@github.com:lunrtech/dumber.git</connection>
+        <developerConnection>scm:git:git@github.com:lunrtech/dumber.git</developerConnection>
+        <url>https://github.com/lunrtech/dumber</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>ib1987</id>
+            <name>Bence Ignácz</name>
+            <email>bence.ignacz01@gmail.com</email>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/lunrtech/dumber/issues</url>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
 </project>
