@@ -10,7 +10,8 @@ public class ValueGenerator {
 
     public static String generateString(long min, long max, String regexp) {
         String retVal = null;
-        int    size   = ThreadLocalRandom.current().nextInt((int) min, (int) max + 1);
+        int size = min < max ?
+                ThreadLocalRandom.current().nextInt((int) min, (int) max + 1) : 10;
         if (regexp != null) {
             Generex generex = new Generex(regexp);
             retVal = generex.random();

@@ -5,15 +5,19 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Singleton;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import tech.lunr.dumber.pojo.Rule;
 
@@ -34,6 +38,23 @@ public class Util<T> {
         List<Rule> rules = new ArrayList<Rule>();
         try {
             Field[] fields = clazz.getDeclaredFields();
+            if (clazz.getSuperclass().isAnnotationPresent(MappedSuperclass.class)) {
+                Type genericType = ((ParameterizedType)(clazz.getGenericSuperclass())).getActualTypeArguments()[0];
+                Field[] sFields     = clazz.getSuperclass().getDeclaredFields();
+                for (Field sField : sFields) {
+                    Rule rule = new Rule();
+                    rule.setGenericType(genericType);
+                    rule.setField(sField);
+                    sField.getType();
+                    log.debug("Found field {}.{}:{}", clazz.getSimpleName(), sField.getName(), sField.getType().getName());
+                    scanAnnotations(sField, rule);
+                    rule.setSuperField(true);
+                    if (sField.getType().isEnum()) {
+                        rule.setEnumClazz(sField.getType());
+                    }
+                    rules.add(rule);
+                }
+            }
             for (Field field : fields) {
                 Rule rule = new Rule();
                 rule.setField(field);
@@ -68,6 +89,10 @@ public class Util<T> {
         } else if (annotation.annotationType() == Max.class) {
             log.debug("Annotation value {}={}", annotation.annotationType(), ((Max)annotation).value());
             rule.setMax(((Max)annotation).value());
+        } else if (annotation.annotationType() == Size.class) {
+            log.debug("Annotation size found min={} max={}", ((Size)annotation).min(), ((Size)annotation).max());
+            rule.setMin(((Size)annotation).min());
+            rule.setMax(((Size)annotation).max());
         } else if (annotation.annotationType() == Pattern.class) {
             log.debug("Annotation patten {}={}", annotation.annotationType(), ((Pattern)annotation).regexp());
             rule.setPattern(((Pattern)annotation).regexp());

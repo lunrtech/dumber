@@ -71,7 +71,12 @@ public class DumberBuilder {
 
     private void buildObject(long idx, List<Rule> rules, Object obj) throws NoSuchFieldException, IllegalAccessException {
         for (Rule rule : rules) {
-            Field f = obj.getClass().getDeclaredField(rule.getField().getName());
+            Field f = null;
+            if (rule.isSuperField()) {
+                f = obj.getClass().getSuperclass().getDeclaredField(rule.getField().getName());
+            } else {
+                f = obj.getClass().getDeclaredField(rule.getField().getName());
+            }
             f.setAccessible(true);
             if (f.getType() == Long.class && rule.isId()) {
                 f.set(obj, idx);
@@ -99,6 +104,20 @@ public class DumberBuilder {
                 Class<?> listClass = (Class<?>) pType.getActualTypeArguments()[0];
                 List childs = mock(listClass, 3);
                 f.set(obj, childs);
+            } else if (rule.isSuperField() && f.getType() == Object.class) {
+                if ((rule.getGenericType() == long.class || rule.getGenericType() == Long.class) && rule.isId()) {
+                    f.set(obj, (long) idx);
+                } else if (rule.getGenericType() == long.class || rule.getGenericType() == Long.class) {
+                    f.set(obj, (long) ValueGenerator.generateInt());
+                } else if (rule.getGenericType() == String.class) {
+                    f.set(obj, ValueGenerator.generateString(rule.getMin(), rule.getMax(), rule.getPattern()));
+                } else if (f.getType() == int.class || f.getType() == Integer.class) {
+                    f.set(obj, ValueGenerator.generateInt());
+                } else if (f.getType() == ZonedDateTime.class) {
+                    f.set(obj, ZonedDateTime.now());
+                } else if (f.getType() == LocalDate.class) {
+                    f.set(obj, LocalDate.now());
+                }
             }
         }
     }

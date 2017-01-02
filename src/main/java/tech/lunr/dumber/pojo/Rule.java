@@ -1,19 +1,19 @@
 package tech.lunr.dumber.pojo;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 
-/**
- * Created by IB on 2016. 12. 31..
- */
 public class Rule {
 
     private Field field;
-    private long min = 0;
-    private long max = Long.MAX_VALUE;
-    private String pattern = null;
-    private boolean isId = false;
+    private long    min          = 0;
+    private long    max          = 0;
+    private String  pattern      = null;
+    private boolean isId         = false;
     private boolean isEnumerated = false;
-    private Class enumClazz = null;
+    private boolean isSuperField = false;
+    private Class   enumClazz    = null;
+    private Type    genericType  = null;
 
     public Field getField() {
         return field;
@@ -69,5 +69,21 @@ public class Rule {
 
     public void setEnumClazz(Class enumClazz) {
         this.enumClazz = enumClazz;
+    }
+
+    public boolean isSuperField() {
+        return isSuperField;
+    }
+
+    public void setSuperField(boolean superField) {
+        isSuperField = superField;
+    }
+
+    public Type getGenericType() {
+        return genericType;
+    }
+
+    public void setGenericType(Type genericType) {
+        this.genericType = genericType;
     }
 }
