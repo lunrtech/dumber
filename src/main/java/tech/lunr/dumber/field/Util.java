@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Singleton;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -39,6 +40,9 @@ public class Util<T> {
                 field.getType();
                 log.debug("Found field {}.{}:{}", clazz.getSimpleName(), field.getName(), field.getType().getName());
                 scanAnnotations(field, rule);
+                if (field.getType().isEnum()) {
+                    rule.setEnumClazz(field.getType());
+                }
                 rules.add(rule);
             }
         } catch (IllegalAccessException e) {
@@ -70,6 +74,9 @@ public class Util<T> {
         } else if (annotation.annotationType() == Id.class) {
             log.debug("Annotation id found");
             rule.setId(true);
+        } else if (annotation.annotationType() == Enumerated.class) {
+            log.debug("Field is enumerated {}", ((Enumerated)annotation).value());
+            rule.setEnumerated(true);
         }
     }
 

@@ -12,6 +12,8 @@ public class Rule {
     private long max = Long.MAX_VALUE;
     private String pattern = null;
     private boolean isId = false;
+    private boolean isEnumerated = false;
+    private Class enumClazz = null;
 
     public Field getField() {
         return field;
@@ -51,5 +53,21 @@ public class Rule {
 
     public void setId(boolean id) {
         isId = id;
+    }
+
+    public boolean isEnumerated() {
+        return isEnumerated;
+    }
+
+    public void setEnumerated(boolean enumerated) {
+        isEnumerated = enumerated;
+    }
+
+    public Class getEnumClazz() {
+        return enumClazz;
+    }
+
+    public void setEnumClazz(Class enumClazz) {
+        this.enumClazz = enumClazz;
     }
 }

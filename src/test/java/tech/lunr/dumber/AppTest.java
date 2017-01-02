@@ -5,12 +5,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.List;
+
 import tech.lunr.dumber.builder.DumberBuilder;
 import tech.lunr.dumber.model.Dummy;
 
-/**
- * Created by IB on 2016. 12. 30..
- */
 @RunWith(MockitoJUnitRunner.class)
 public class AppTest {
 
@@ -19,12 +18,12 @@ public class AppTest {
 
     @Test
     public void testDumber() {
-
-        builder.mock(Dummy.class);
-
+        Dummy dummy = (Dummy)builder.mock(Dummy.class);
     }
 
-
-
+    @Test
+    public void testListDumber() {
+        List<Dummy> dummies = builder.mock(Dummy.class, 5);
+    }
 
 }

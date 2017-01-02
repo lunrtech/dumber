@@ -1,6 +1,10 @@
 package tech.lunr.dumber.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +33,13 @@ public class Dummy {
 
     private int ord;
 
+    @Enumerated(EnumType.STRING)
+    private DummyEnum dummyType;
+
+    private Child child;
+
+    private List<Child> childs;
+
     public Dummy() {
     }
 
@@ -56,12 +67,39 @@ public class Dummy {
         this.ord = ord;
     }
 
+    public DummyEnum getDummyType() {
+        return dummyType;
+    }
+
+    public void setDummyType(DummyEnum dummyType) {
+        this.dummyType = dummyType;
+    }
+
+    public Child getChild() {
+        return child;
+    }
+
+    public void setChild(Child child) {
+        this.child = child;
+    }
+
+    public List<Child> getChilds() {
+        return childs;
+    }
+
+    public void setChilds(List<Child> childs) {
+        this.childs = childs;
+    }
+
     @Override
     public String toString() {
         return "Dummy{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", ord=" + ord +
+                ", dummyType=" + dummyType +
+                ", child=" + child +
+                ", childs=" + childs +
                 '}';
     }
 }
