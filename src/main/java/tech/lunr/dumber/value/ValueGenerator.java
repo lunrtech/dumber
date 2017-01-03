@@ -2,8 +2,7 @@ package tech.lunr.dumber.value;
 
 import com.mifmif.common.regex.Generex;
 
-import org.apache.commons.lang3.StringUtils;
-
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ValueGenerator {
@@ -16,7 +15,14 @@ public class ValueGenerator {
             Generex generex = new Generex(regexp);
             retVal = generex.random();
         } else {
-            retVal = StringUtils.rightPad("A", size, 'B');
+            Random r = new Random();
+            StringBuilder sb = new StringBuilder();
+            for (int i = (int)min; i < size; i++) {
+                char c = (char)(r.nextInt(26) + 'a');
+                sb.append(c);
+            }
+
+            retVal = sb.toString();
         }
         return retVal;
     }
