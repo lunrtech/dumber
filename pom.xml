@@ -16,6 +16,8 @@
 
     <url>https://github.com/lunrtech/dumber</url>
 
+    <!--sample-->
+
     <scm>
         <connection>scm:git:git@github.com:lunrtech/dumber.git</connection>
         <developerConnection>scm:git:git@github.com:lunrtech/dumber.git</developerConnection>
